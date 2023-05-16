@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="Page to display board List">
+    <meta name="keywords" content="board">
+    <meta name="author" content="Rohan Kim">
+    
+    <title>Home</title>
+    <Link rel="stylesheet" href="board.css" />
+</head>
+<body>
+    <section class="board">
+        <div class="page-title">
+        <div class="container">
+            <h3>My board</h3>
+        </div>    
+        </div>
+
+        <div class="user-info">
+            <div class="container">
+                <span class="user-info_name">
+                    <span>Cosmo</span>
+                </span>
+                <span class="user-info_signout">
+                    <a href="/signout">Logout</a>
+                </span>
+                <span class="user-info_join">
+                    <a href="/join">Join</a>
+                </span>
+            </div>
+        </div>
+
+        <!-- Board List Area -->
+        <div id="board-list">
+            <div class="container">
+                <table class="board-table">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="th-id">ID</th>
+                            <th scope="col" class="th-title">TITLE</th>
+                            <th scope="col" class="th-viewcnt">VIEWS</th>
+                            <th scope="col" class="th-date">DATE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>3</td>
+                            <th>
+                                <a href="/post?id=3">Title 3</a>
+                            </th>
+                            <td>333</td>
+                            <td>2023.03.03</td>
+                        </tr>
+
+                        <tr>
+                            <td>2</td>
+                            <th>
+                                <a href="/post?id=2">Title 2</a>
+                            </th>
+                            <td>222</td>
+                            <td>2023.02.02</td>
+                        </tr>
+
+                        <tr>
+                            <td>1</td>
+                            <th>
+                                <a href="/post?id=1">Title 1</a>
+                            </th>
+                            <td>111</td>
+                            <td>2023.01.01</td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+
+
+    </section>
+</body>
+</html>
