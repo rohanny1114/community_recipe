@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 /**
  * This class controls the user related actions.
  *
- * @Author Rohan Kim
+ * @author Rohan Kim
  */
 @Controller
 public class UserController {
     /**
-     * Forward the join form templete.
+     * Forward the join form template.
      *
      * @return join the page for a new user registration form
      */
@@ -57,7 +57,7 @@ public class UserController {
     /**
      * Sign in to the board
      *
-     * @return signin the page for signing in form
+     * @return sign in the page for signing in form
      */
     @GetMapping("/signin")
     public String signin() {
