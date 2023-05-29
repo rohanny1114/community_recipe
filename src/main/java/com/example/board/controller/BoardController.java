@@ -1,6 +1,9 @@
 package com.example.board.controller;
 
+import com.example.board.dto.SigninInfo;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,11 +18,14 @@ public class BoardController {
     /**
      * Forward the board template.
      * ClassPath: resources/templates/
+     * Spring inputs automatically httpsession (session) and model (parse Thymeleaf template the values)
      *
      * @return list the name of the template
      */
     @GetMapping("/")
-    public String list() {
+    public String list(HttpSession session, Model model) {
+        SigninInfo signinInfo = (SigninInfo)session.getAttribute("signinInfo");
+        model.addAttribute("signinInfo", signinInfo);
         return "list";
     }
 

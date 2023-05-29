@@ -1,9 +1,16 @@
 package com.example.board.controller;
 
+import com.example.board.dto.SigninInfo;
+import com.example.board.dto.User;
+import com.example.board.service.UserService;
+import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.awt.print.PrinterIOException;
 
 /**
  * This class controls the user related actions.
@@ -11,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author Rohan Kim
  */
 @Controller
+@RequiredArgsConstructor // Lombok: auto arg constructor creator for final params.
 public class UserController {
+    private final UserService userService;
     /**
      * Forward the join form template.
      *
@@ -40,7 +49,7 @@ public class UserController {
         System.out.println("name : " + name);
         System.out.println("email : " + email);
         System.out.println("password : " + password);
-
+        userService.addUser(name, email, password);
 
         return "redirect:/welcome"; //  브라우저에게 자동으로 http://localhost:8080/welcome 으로 이동
     }
@@ -76,12 +85,28 @@ public class UserController {
     @PostMapping("/userChk")
     public String userChk(
             @RequestParam("email") String email,
-            @RequestParam("password") String password
+            @RequestParam("password") String password,
+            HttpSession httpSession // Auto manage session by Spring
     ){
         // TEST INPUT VALUES
         System.out.println("email : " + email);
         System.out.println("password : " + password);
 
+        try {
+            User user = userService.getUser(email);
+            System.out.println("[SYSTEM] " + user);
+            if (user.getPassword().equals(password)) {
+                System.out.println("[SYSTEM] Correct Password");
+                // Save input user information into Session
+                SigninInfo signinInfo = new SigninInfo(user.getUserId(), user.getEmail(), user.getName());
+                httpSession.setAttribute("signinInfo", signinInfo);
+                System.out.println("[SYSTEM] Signed user info set on the session");
+            } else {
+                throw new RuntimeException("[SYSTEM] Wrong Password");
+            }
+        } catch (Exception e) {
+            return "redirect:/signin?error=true";
+        }
         return "redirect:/";
     }
 
@@ -91,7 +116,8 @@ public class UserController {
      * @return redirect to home page
      */
     @GetMapping("/signout")
-    public String signout() {
+    public String signout(HttpSession session) {
+        session.removeAttribute("signinInfo");
         return "redirect:/";
     }
 }

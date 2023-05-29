@@ -22,6 +22,13 @@ public class UserService {
         User user = userDao.addUser(email, name, password);
         userDao.mapRole(user.getUserId()); // assign role
         return user;
+        // End transaction here
+    }
+
+    // Get user information
+    @Transactional
+    public User getUser(String email){
+        return userDao.getUser(email);
     }
 
 }

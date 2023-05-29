@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -22,13 +22,16 @@
 
         <div class="user-info">
             <div class="container">
-                <span class="user-info_name">
+                <span class="user-info_name" th:if="${signinInfo != null}">
                     <span>Cosmo</span>
                 </span>
-                <span class="user-info_signout">
-                    <a href="/signout">Logout</a>
+                <span class="user-info_signout" th:if="${signinInfo !=null}">
+                    <a href="/signout">Sign Out</a>
                 </span>
-                <span class="user-info_join">
+                <span class="user-info_signout" th:if="${signinInfo == null}">
+                    <a href="/signin">Sign In</a>
+                </span>
+                <span class="user-info_join" th:if="${signinInfo == null}">
                     <a href="/join">Join</a>
                 </span>
             </div>
