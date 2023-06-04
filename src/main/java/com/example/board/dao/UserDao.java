@@ -21,7 +21,7 @@ public class UserDao {
     // Create JDBC template
     private final NamedParameterJdbcTemplate jdbcTemplate;
     // Easy INSERT support
-    private SimpleJdbcInsertOperations insertUser;
+    private final SimpleJdbcInsertOperations insertUser;
     public UserDao(DataSource dataSource) {
         jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
         insertUser = new SimpleJdbcInsert(dataSource)

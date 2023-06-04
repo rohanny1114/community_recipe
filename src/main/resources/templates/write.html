@@ -15,7 +15,8 @@
     <h1>Sign In</h1>
 
     <form action="/recipeReg" method="POST">
-        Name: Get name from the session <br />
+        Name: <span th:text="${signinInfo.name}"></span> 
+        <br />
         Title: <input type="text" name="title" /><br/>
         Contents: <br/>
         <textarea name="content" id="" cols="50" rows="5"></textarea><br/>

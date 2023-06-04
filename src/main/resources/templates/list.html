@@ -22,12 +22,16 @@
 
         <div class="user-info">
             <div class="container">
+                <!-- When user signed -->
                 <span class="user-info_name" th:if="${signinInfo != null}">
-                    <span>Cosmo</span>
+                    <span>Welcome, 
+                        <span th:text="${signinInfo.name}"></span> 
+                    </span>
                 </span>
                 <span class="user-info_signout" th:if="${signinInfo !=null}">
                     <a href="/signout">Sign Out</a>
                 </span>
+                <!-- When user sign out -->
                 <span class="user-info_signout" th:if="${signinInfo == null}">
                     <a href="/signin">Sign In</a>
                 </span>
@@ -80,7 +84,7 @@
                 </table>
             </div>
             <div>
-                <a href="/write">NEW RECIPE</a>
+                <a href="/write" th:if="${signinInfo !=null}">NEW RECIPE</a>
             </div>
         </div>
 
