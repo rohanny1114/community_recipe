@@ -1,5 +1,6 @@
 package com.example.board.controller;
 
+import com.example.board.dto.Post;
 import com.example.board.dto.SigninInfo;
 import com.example.board.service.PostService;
 import jakarta.servlet.http.HttpSession;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 /**
  * Component that gets HTTP request from the browser and responds
  *
@@ -17,8 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 @RequiredArgsConstructor
-public class BoardController {
-    private final PostService boardService;
+public class PostController {
+    private final PostService postService;
 
     /**
      * Forward the board template.
@@ -31,6 +34,19 @@ public class BoardController {
     public String list(HttpSession session, Model model) {
         SigninInfo signinInfo = (SigninInfo)session.getAttribute("signinInfo");
         model.addAttribute("signinInfo", signinInfo);
+
+        int page = 1;
+        int totalPosts = postService.getTotalPosts();
+        List<Post> posts = postService.getPosts(page);
+        int totalPage = totalPosts/10;
+        if (totalPosts % 10 > 0 ){
+            totalPage++;
+        }
+        int currentPage = page;
+        model.addAttribute("posts", posts);
+        model.addAttribute("totalPage", totalPage);
+        model.addAttribute("currentPage", currentPage);
+
         return "list";
     }
 
@@ -70,7 +86,7 @@ public class BoardController {
         if (signinInfo == null) { // redirect to signin if the session has no user info
             return "redirect:/signin";
         }
-        boardService.addPost(signinInfo.getUserId(), title, content);
+        postService.addPost(signinInfo.getUserId(), title, content);
 
         return "redirect:/";
     }

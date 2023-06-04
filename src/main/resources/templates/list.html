@@ -49,36 +49,20 @@
                         <tr>
                             <th scope="col" class="th-id">ID</th>
                             <th scope="col" class="th-title">TITLE</th>
-                            <th scope="col" class="th-viewcnt">VIEWS</th>
+                            <th scope="col" class="th-title">WRITER</th>
                             <th scope="col" class="th-date">DATE</th>
+                            <th scope="col" class="th-viewcnt">VIEWS</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>3</td>
+                        <tr th:each="post: ${posts}">
+                            <td th:text ="${post.postId}"></td>
                             <th>
-                                <a href="/post?id=3">Title 3</a>
+                                <a href="/post?id=3" th:text ="${post.title}"></a>
                             </th>
-                            <td>333</td>
-                            <td>2023.03.03</td>
-                        </tr>
-
-                        <tr>
-                            <td>2</td>
-                            <th>
-                                <a href="/post?id=2">Title 2</a>
-                            </th>
-                            <td>222</td>
-                            <td>2023.02.02</td>
-                        </tr>
-
-                        <tr>
-                            <td>1</td>
-                            <th>
-                                <a href="/post?id=1">Title 1</a>
-                            </th>
-                            <td>111</td>
-                            <td>2023.01.01</td>
+                            <td th:text ="${post.name}"></td>
+                            <td th:text ="${post.date}"></td>
+                            <td th:text ="${post.view}"></td>
                         </tr>
                     </tbody>
                 </table>
