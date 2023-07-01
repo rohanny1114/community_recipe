@@ -19,6 +19,10 @@ public class UserService {
     // User: Read user info in the DB
     @Transactional // make multiple action into one transaction
     public User addUser(String name, String email, String password) {
+        User tempUser = userDao.getUser(email); // Check if email is duplicated
+        if(tempUser != null){
+            throw new RuntimeException("This email is already joined");
+        }
         User user = userDao.addUser(email, name, password);
         userDao.mapRole(user.getUserId()); // assign role
         return user;

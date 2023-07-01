@@ -51,8 +51,12 @@ public class PostController {
     }
 
     @GetMapping("/post")
-    public String post(@RequestParam("id") int id){
-        System.out.println("ID: "+ id);
+    public String post(@RequestParam("postId") int postId, Model model){
+        System.out.println("POST ID: "+ postId);
+
+        Post post = postService.getPost(postId);
+        model.addAttribute("post", post);
+
 
         return "post";
     }
@@ -87,7 +91,24 @@ public class PostController {
             return "redirect:/signin";
         }
         postService.addPost(signinInfo.getUserId(), title, content);
+        return "redirect:/";
+    }
 
+    /**
+     * This method delete the selected post
+     * @param postId Id of selected post
+     * @param session
+     * @return
+     */
+    @GetMapping("/delete")
+    public String delete(@RequestParam("postId") int postId, HttpSession session){
+        SigninInfo signinInfo= (SigninInfo) session.getAttribute("signinInfo");
+        // Back to signin form if no login information on the session
+        if(signinInfo == null){
+            return "redirect:/signin";
+        }
+        // Verify the writer of the post and the logged-in user
+        postService.deletePost(signinInfo.getUserId(), postId);
         return "redirect:/";
     }
 }

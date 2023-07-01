@@ -12,11 +12,19 @@
     <title>Post</title>
 </head>
 <body>
-
-    <!-- Read a post with exact ID -->
-    <!-- Increase 1 from the number of views -->
-
-    <H1>Details</H1>
+    <H1 th:text="${post.title}"></H1>
+    <div>Writer: <span th:text="${post.name}"></span></div>
+    <div>Date: <span th:text="${post.date}"></span></div>
+    <div>Content: <span th:text="${post.content}"></span></div>
     
+    <div>
+        <a href="/">LIST</a>
+    </div>
+    <div>
+        <a href="/">UPDATE</a>
+    </div>
+    <div>
+        <a th:href="@{/delete(postId=${post.postId})}">DELETE</a>
+    </div>
 </body>
 </html>

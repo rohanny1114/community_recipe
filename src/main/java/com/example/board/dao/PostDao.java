@@ -58,4 +58,39 @@ public class PostDao {
         List<Post> posts = jdbcTemplate.query(sql, Map.of("start", start), rowMapper);
         return posts;
     }
+
+    /**
+     * This method gets the data of selected post
+     * @param postId Id of selected post
+     * @return the map of result from the selected post
+     */
+    @Transactional(readOnly = true)
+    public Post getPost(int postId) {
+        String sql = "SELECT p.user_id, p.post_id, p.title, p.date, p.view, u.name, p.content FROM post p, user u WHERE p.user_id = u.user_id AND p.post_id = :postId";
+        RowMapper<Post> rowMapper = BeanPropertyRowMapper.newInstance(Post.class);
+        // for sql that returns 1 or 0 result
+        Post post = jdbcTemplate.queryForObject(sql, Map.of("postId", postId), rowMapper);
+        return post;
+    }
+
+    /**
+     * This method increase 1 to the number of view
+     * @param postId Id of selected post
+     */
+    @Transactional
+    public void updateView(int postId) {
+        String sql = "UPDATE post SET view=view+1 WHERE post_id= :postId";
+        jdbcTemplate.update(sql, Map.of("postId", postId));
+    }
+
+    /**
+     * This method delete the selected post
+     * when the id of post writer and the logged-in user matched.
+     * @param postId the id of the post to be deleted
+     */
+    @Transactional
+    public void deletePost(int postId) {
+        String sql = "DELETE FROM post WHERE post_id = :postId";
+        jdbcTemplate.update(sql, Map.of("postId", postId));
+    }
 }
