@@ -57,7 +57,6 @@ public class PostController {
         Post post = postService.getPost(postId);
         model.addAttribute("post", post);
 
-
         return "post";
     }
 
@@ -74,7 +73,7 @@ public class PostController {
         return "write";
     }
 
-    @PostMapping("/recipeReg")
+    @PostMapping("/regPost")
     public String postReg(@RequestParam("title") String title,
                             @RequestParam("content") String content,
                             HttpSession session) {
@@ -110,5 +109,34 @@ public class PostController {
         // Verify the writer of the post and the logged-in user
         postService.deletePost(signinInfo.getUserId(), postId);
         return "redirect:/";
+    }
+
+    @GetMapping("/updatePost")
+    public String updatePost(@RequestParam("postId") int postId, Model model, HttpSession session){
+        SigninInfo signinInfo= (SigninInfo) session.getAttribute("signinInfo");
+        if(signinInfo == null){
+            return "redirect:/signin";
+        }
+        Post post = postService.getPost(postId, false);
+        model.addAttribute("post", post);
+        model.addAttribute("signinInfo", signinInfo);
+        return "updatePost";
+    }
+    @GetMapping("/update")
+    public String update(@RequestParam("postId")int postId,
+                         @RequestParam("title") String title,
+                         @RequestParam("content") String content,
+                        HttpSession session){
+        SigninInfo signinInfo= (SigninInfo) session.getAttribute("signinInfo");
+        if(signinInfo == null){
+            return "redirect:/signin";
+        }
+        Post post = postService.getPost(postId, false);
+        if(post.getUserId() !=signinInfo.getUserId()){
+            return "redirect:/post?postId=" +postId;
+        }
+        postService.updatePost(postId, title, content);
+
+        return "redirect:/post?postId="+postId;
     }
 }

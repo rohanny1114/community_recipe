@@ -1,9 +1,7 @@
 package com.example.board.dao;
 
 import com.example.board.dto.Post;
-import com.example.board.dto.User;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -92,5 +90,16 @@ public class PostDao {
     public void deletePost(int postId) {
         String sql = "DELETE FROM post WHERE post_id = :postId";
         jdbcTemplate.update(sql, Map.of("postId", postId));
+    }
+    @Transactional
+    public Post updatePost(int postId, String title, String content) {
+        String sql = "UPDATE post SET title =:title, content= :content WHERE post_id = :postId";
+        Post post = new Post();
+        post.setPostId(postId);
+        post.setTitle(title);
+        post.setContent(content);
+        SqlParameterSource params = new BeanPropertySqlParameterSource(post);
+        jdbcTemplate.update(sql, params);
+        return post;
     }
 }

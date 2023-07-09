@@ -9,18 +9,19 @@
     <meta name="keywords" content="new recipe">
     <meta name="author" content="Rohan Kim">
 
-    <title>Sign In</title>
+    <title>New Post</title>
 </head>
 <body>
-    <h1>Sign In</h1>
+    <h1>New Post</h1>
 
-    <form action="/recipeReg" method="POST">
+    <form action="/postReg" method="POST">
+        <input type="hidden" name="postId" th:value = "${post.postId}"/>
         Name: <span th:text="${signinInfo.name}"></span> 
         <br />
         Title: <input type="text" name="title" /><br/>
         Contents: <br/>
         <textarea name="content" id="" cols="50" rows="5"></textarea><br/>
-        <input type="submit" value="REGISTER" />
+        <input type="SUBMIT" value="REGISTER" />
     </form>
     <a href="/">Home</a>
 </body>

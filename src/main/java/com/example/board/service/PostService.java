@@ -29,11 +29,25 @@ public class PostService {
 
     @Transactional
     public Post getPost(int postId) {
+        return getPost(postId, true);
+    }
+
+    /**
+     * This method get the chosen post to update the content
+     * The view count will not be increased if updateViewCnt is false.
+     * @param postId the chosen post id
+     * @param updateViewCnt
+     * @return
+     */
+    @Transactional
+    public Post getPost(int postId, boolean updateViewCnt){
         // Read post that matching the postId
         Post post = postDao.getPost(postId);
-        // Increase 1 to the number of view
-        postDao.updateView(postId);
-        return  post;
+        if(updateViewCnt){
+            // Increase 1 to the number of view
+            postDao.updateView(postId);
+        }
+        return post;
     }
 
     /**
@@ -48,5 +62,9 @@ public class PostService {
         if(post.getUserId() == userId){
             postDao.deletePost(postId);
         }
+    }
+    @Transactional
+    public void updatePost(int postId, String title, String content) {
+        postDao.updatePost(postId, title, content);
     }
 }

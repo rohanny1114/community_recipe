@@ -21,7 +21,7 @@
         <a href="/">LIST</a>
     </div>
     <div>
-        <a href="/">UPDATE</a>
+        <a th:href="@{/updatePost(postId=${post.postId})}">UPDATE</a>
     </div>
     <div>
         <a th:href="@{/delete(postId=${post.postId})}">DELETE</a>
