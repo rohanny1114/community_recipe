@@ -106,8 +106,13 @@ public class PostController {
         if(signinInfo == null){
             return "redirect:/signin";
         }
-        // Verify the writer of the post and the logged-in user
-        postService.deletePost(signinInfo.getUserId(), postId);
+        List<String> roles = signinInfo.getRoles();
+        if (roles.contains("ROLE_ADMIN")){
+            postService.deletePost(postId);
+        } else {
+            // Verify the writer of the post and the logged-in user
+            postService.deletePost(signinInfo.getUserId(), postId);
+        }
         return "redirect:/";
     }
 

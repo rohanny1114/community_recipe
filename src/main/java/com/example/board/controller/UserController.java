@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.awt.print.PrinterIOException;
+import java.util.List;
 
 /**
  * This class controls the user related actions.
@@ -99,6 +100,10 @@ public class UserController {
                 System.out.println("[SYSTEM] Correct Password");
                 // Save input user information into Session
                 SigninInfo signinInfo = new SigninInfo(user.getUserId(), user.getEmail(), user.getName());
+                // Read roles and get roles on SigninInfo
+                List<String> roles =  userService.getRoles(user.getUserId());
+                signinInfo.setRoles(roles);
+
                 httpSession.setAttribute("signinInfo", signinInfo);
                 System.out.println("[SYSTEM] Signed user info set on the session");
             } else {

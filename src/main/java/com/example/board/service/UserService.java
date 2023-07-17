@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.swing.*;
+import java.util.List;
 
 // class that handle business in transaction unit
 @Service
@@ -35,4 +36,8 @@ public class UserService {
         return userDao.getUser(email);
     }
 
+    @Transactional(readOnly = true)
+    public List<String> getRoles(int userId) {
+        return userDao.getRoles(userId);
+    }
 }

@@ -63,6 +63,15 @@ public class PostService {
             postDao.deletePost(postId);
         }
     }
+
+    /**
+     * This method deletes post when user has admin role.
+     * @param postId
+     */
+    @Transactional
+    public void deletePost(int postId) {
+            postDao.deletePost(postId);
+    }
     @Transactional
     public void updatePost(int postId, String title, String content) {
         postDao.updatePost(postId, title, content);
